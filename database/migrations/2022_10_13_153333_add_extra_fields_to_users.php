@@ -14,7 +14,7 @@ class AddExtraFieldsToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone')->unique();
+            $table->string('phone');
             $table->boolean('is_admin')->default(false);
             $table->string('address');
         });
