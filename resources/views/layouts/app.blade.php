@@ -22,7 +22,7 @@
 <body>
     <div id="app" class="d-flex flex-column min-vh-100 bg-white">
         @include('partials.navbar')
-        <main id="main" class="py-4 flex-shrink-0">
+        <main id="main" class="pb-4 flex-shrink-0">
             @yield('content')
         </main>
         @include('partials.footer')
