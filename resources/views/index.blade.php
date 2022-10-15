@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@push('styles')
     <style>
         .featurette-divider {
             margin: 5rem 0;
@@ -25,6 +25,9 @@
             }
         }
     </style>
+@endpush
+
+@section('content')
     {{-- Hero --}}
     <div class="pt-5 text-center">
         <h1 class="display-4 fw-bold">Level up your music connection</h1>
