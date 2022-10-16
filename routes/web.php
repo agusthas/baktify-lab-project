@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +34,9 @@ Route::group(['middleware' => ['auth', 'is_admin']], function () {
 Route::resource('products', ProductController::class, [
     'only' => ['index', 'show']
 ]);
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('profile/me', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('profile/me/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile/me/update', [ProfileController::class, 'update'])->name('profile.update');
+});
