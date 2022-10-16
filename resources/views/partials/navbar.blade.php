@@ -3,7 +3,8 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -13,6 +14,30 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('about') }}">{{ __('About Us') }}</a>
                 </li>
+
+                @if(Auth::guest() || !Auth::user()->is_admin)
+                    {{-- User is either a Guest or a Member --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
+                    </li>
+                @endif
+
+                @auth
+                    @if(Auth::user()->is_admin)
+                        {{-- User is DEFINITELY an Admin --}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('products.index') }}">{{ __('Manage Products') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{ __('Add Category') }}</a>
+                        </li>
+                    @else
+                        {{-- User is DEFINITELY a Member --}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{ __('My Transactions') }}</a>
+                        </li>
+                    @endif
+                @endauth
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -32,7 +57,8 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
 
