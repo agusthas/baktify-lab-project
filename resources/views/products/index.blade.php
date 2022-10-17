@@ -7,6 +7,17 @@
 
 @extends('layouts.app')
 
+@push('styles')
+    <style>
+        .card-image-bg {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="container py-4 mt-4">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -39,9 +50,11 @@
                     @endphp
                     <div class="col">
                         <div class="card">
-                            <img src="{{ asset('storage/' . $product->picture) }}"
-                                 class="card-img-top"
-                                 alt="">
+                            @if(Storage::disk('public')->exists($product->picture))
+                                <div class="card-image-bg card-img-top" style="background-image: url('{{ asset('storage/' . $product->picture) }}')"></div>
+                            @else
+                                <div class="card-image-bg card-img-top" style="background-image: url('{{ asset('img/placeholder/placeholder.png') }}')"></div>
+                            @endif
                             <div class="card-body">
                                 <div class="card-subtitle">{{ $product->name }}</div>
                                 <div class="card-title fw-bold">
