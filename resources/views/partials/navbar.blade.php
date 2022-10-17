@@ -27,7 +27,7 @@
                             <a class="nav-link {{ Route::is('products.index') ? 'link-primary' : '' }}" href="{{ route('products.index') }}">{{ __('Manage Products') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">{{ __('Add Category') }}</a>
+                            <a class="nav-link {{ Route::is('categories.create') ? 'link-primary' : '' }}" href="{{ route('categories.create') }}">{{ __('Add Category') }}</a>
                         </li>
                     @else
                         <li class="nav-item">
