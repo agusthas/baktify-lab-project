@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@php
-    /**
-     * @var \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
-     */
-@endphp
-
 @section('content')
     <div class="container">
         @if(session()->has('success'))

@@ -1,7 +1,4 @@
 @php
-    use App\Models\Product;use Illuminate\Support\Collection;
-    /** * @var Collection|Product[] $products */
-
     $isAdmin = !Auth::guest() && Auth::user()->is_admin;
 @endphp
 
