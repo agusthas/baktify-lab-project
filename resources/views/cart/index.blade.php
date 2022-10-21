@@ -29,7 +29,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($cart->details as $cartDetail)
+                    @foreach($cart->cartDetails as $cartDetail)
                         <tr>
                             <td>
                                 <div class="d-flex flex-nowrap gap-2  align-items-center">
@@ -75,7 +75,7 @@
                         <td></td>
                         <td></td>
                         <th>Grand Total</th>
-                        <td>IDR {{ $cart->details->sum('subtotal') }}</td>
+                        <td>IDR {{ $cart->cartDetails->sum('subtotal') }}</td>
                         <td>
                             {{-- TODO: redirect to checkout page --}}
                             <a href="#" class="btn btn-sm btn-success">Checkout</a>

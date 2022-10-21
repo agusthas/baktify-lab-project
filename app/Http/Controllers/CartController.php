@@ -14,7 +14,7 @@ class CartController extends Controller
     {
         $user = $request->user();
         $cart = Cart::query()
-            ->with('details')
+            ->with('cartDetails')
             ->where('user_id', $user->id)
             ->first();
 
