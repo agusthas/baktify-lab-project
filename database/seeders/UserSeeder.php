@@ -26,5 +26,17 @@ class UserSeeder extends Seeder
                 'name' => "Member",
                 'email' => 'member@member.com',
             ])->createOne();
+
+        User::factory()
+            ->state([
+                'name' => "Member 2",
+                'email' => 'member2@member.com',
+            ])->createOne();
+
+        User::factory()
+            ->state([
+                'name' => "Member 3",
+                'email' => 'member3@member.com',
+            ])->createOne();
     }
 }

@@ -15,7 +15,7 @@
 
 @section('content')
     <div class="container">
-        @if($cart && $cart->count())
+        @if($cart && $cart->cartDetails->count())
             <h1 class="h2 mb-4">My Cart</h1>
             <div class="overflow-auto">
                 <table class="table table-stripped table-responsive align-middle text-nowrap">
@@ -77,8 +77,7 @@
                         <th>Grand Total</th>
                         <td>IDR {{ $cart->cartDetails->sum('subtotal') }}</td>
                         <td>
-                            {{-- TODO: redirect to checkout page --}}
-                            <a href="#" class="btn btn-sm btn-success">Checkout</a>
+                            <a href="{{ route('transactions.create') }}" class="btn btn-sm btn-success">Checkout</a>
                         </td>
                     </tr>
                     </tfoot>

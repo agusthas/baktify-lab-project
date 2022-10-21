@@ -31,7 +31,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="#">{{ __('My Transactions') }}</a>
+                            <a class="nav-link {{ Route::is('transactions.index') ? 'link-primary' : '' }}" href="{{ route('transactions.index') }}">{{ __('My Transactions') }}</a>
                         </li>
                     @endif
                 @endauth

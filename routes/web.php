@@ -6,6 +6,7 @@ use App\Http\Controllers\CartDetailController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -53,5 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
     Route::resource('cartDetails', CartDetailController::class, [
         'only' => ['store', 'update']
+    ]);
+
+    Route::resource('transactions', TransactionController::class, [
+       'only' => ['create', 'store', 'index']
     ]);
 });
