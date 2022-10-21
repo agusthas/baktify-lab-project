@@ -53,8 +53,14 @@
                         </li>
                     @endif
                 @else
+                    @if(! request()->user()->is_admin)
+                        <li class="nav-item">
+                            <a href="{{ route('cart.index') }}" class="nav-link {{ Route::is('cart.index') ? 'link-primary' : '' }}">{{ __('Cart') }}</a>
+                        </li>
+                    @endif
                     <li class="nav-item dropdown">
-                        <div class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+                             aria-expanded="false">
                             {{ Auth::user()->name }}
                         </div>
 
