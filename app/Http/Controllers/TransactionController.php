@@ -77,6 +77,14 @@ class TransactionController extends Controller
         ]);
         $transaction->transactionDetails()->createMany($insertedData);
 
+        // Reduce the stock of each product by the qty in cart details
+        foreach ($cart->cartDetails()->with('product')->get() as $cartDetail) {
+            $prevStock = $cartDetail->product->stock;
+            $cartDetail->product()->update([
+                'stock' => $prevStock - $cartDetail->qty
+            ]);
+        }
+
         // Clear all cartDetails related to this cart
         $cart->cartDetails()->delete();
 
