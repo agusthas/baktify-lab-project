@@ -1,7 +1,11 @@
 window._ = require('lodash');
 
 try {
-    require('bootstrap');
+    var bootstrap = require('bootstrap');
+    window.document.addEventListener('DOMContentLoaded', function () {
+        const toastElList = [].slice.call(window.document.querySelectorAll('.toast'));
+        toastElList.map((v) => new bootstrap.Toast(v).show());
+    })
 } catch (e) {}
 
 /**

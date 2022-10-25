@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@php /** @var \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories */ @endphp
-
 @section('content')
     <div class="container py-4">
         <h1 class="fw-bold mb-4">Insert New Product</h1>

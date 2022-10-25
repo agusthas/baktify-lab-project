@@ -22,8 +22,13 @@
 <body>
     <div id="app" class="d-flex flex-column min-vh-100 bg-white">
         @include('partials.navbar')
-        <main id="main" class="pb-4 flex-shrink-0" style="padding-top: 5rem;">
+        <main id="main" class="pb-4 flex-shrink-0 @hasSection('toasts') position-relative @endif" style="padding-top: 5rem;">
             @yield('content')
+            @hasSection('toasts')
+                <div class="toast-container position-fixed top-0 end-0 p-3">
+                    @yield('toasts')
+                </div>
+            @endif
         </main>
         @include('partials.footer')
     </div>

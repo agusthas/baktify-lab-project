@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $searchQuery = $request->query('search', '');
         return view('products.index', [
-            'products' => Product::search($searchQuery)->paginate(12)->withQueryString()
+            'products' => Product::query()->with(['category', 'cartDetails'])->search($searchQuery)->paginate(12)->withQueryString()
         ]);
     }
 
@@ -61,7 +61,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return view('products.show', [
-            'product' => $product->load('category')
+            'product' => $product->load(['category', 'cartDetails'])
         ]);
     }
 

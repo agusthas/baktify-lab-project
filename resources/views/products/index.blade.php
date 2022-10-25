@@ -1,12 +1,20 @@
 @php
-    use App\Models\Product;use Illuminate\Support\Collection;
-    /** * @var Collection|Product[] $products */
-
     $isAdmin = !Auth::guest() && Auth::user()->is_admin;
 @endphp
 
 @extends('layouts.app')
 
+@push('styles')
+    <style>
+        .card-image-bg {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="container py-4 mt-4">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -32,16 +40,22 @@
             <a href="{{ route('products.create') }}" class="mb-2 btn btn-info">Insert Product</a>
         @endif
         @if($products->count())
-            <div class="row row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
                 @foreach($products as $product)
-                    @php
-                        $isOutOfStock = $product->stock === 0;
-                    @endphp
                     <div class="col">
                         <div class="card">
-                            <img src="{{ asset('storage/' . $product->picture) }}"
-                                 class="card-img-top"
-                                 alt="">
+                            @if($product->stock === 0)
+                                <div class="position-absolute m-1">
+                                    <div class="badge bg-secondary text-uppercase mb-3">Out of stock</div>
+                                </div>
+                            @endif
+                            @if(Storage::disk('public')->exists($product->picture))
+                                <div class="card-image-bg card-img-top"
+                                     style="background-image: url('{{ asset('storage/' . $product->picture) }}')"></div>
+                            @else
+                                <div class="card-image-bg card-img-top"
+                                     style="background-image: url('{{ asset('img/placeholder/placeholder.png') }}')"></div>
+                            @endif
                             <div class="card-body">
                                 <div class="card-subtitle">{{ $product->name }}</div>
                                 <div class="card-title fw-bold">
@@ -51,15 +65,18 @@
                                     <a href="{{ route('products.show', $product->id) }}"
                                        class="btn btn-sm btn-outline-success" type="button">View</a>
                                     @if(! $isAdmin)
-                                        <button
-                                            @class([
-                                                'btn btn-sm',
-                                                'btn-outline-primary' => ! $isOutOfStock,
-                                                'btn-secondary disabled' => $isOutOfStock
-                                            ])
-                                            type="button"
-                                        >{{ $isOutOfStock ? 'Out of stock' : 'Add to Cart' }}
-                                        </button>
+                                        @if($product->cartDetails && $product->cartDetails->count() && !Auth::guest())
+                                            <a href="{{ route('cart.index') }}" class="btn btn-sm btn-outline-dark">Show
+                                                in Cart</a>
+                                        @elseif($product->stock)
+                                            <form action="{{ route('cartDetails.store') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <button class="btn btn-sm btn-outline-primary" type="submit">Add to
+                                                    Cart
+                                                </button>
+                                            </form>
+                                        @endif
                                     @else
                                         <a href="{{ route('products.edit', $product->id) }}"
                                            class="btn btn-sm btn-outline-warning" type="button">Edit</a>
