@@ -8,5 +8,7 @@
         <p class="text-muted">{{ $product->description }}</p>
         <p class="text-muted">Stock: {{ $product->stock }}</p>
         <p class="text-muted">Category: {{ $product->category->name }}</p>
+
+        <a href="{{ url()->previous() }}" class="btn btn-outline-primary mt-3">Back</a>
     </div>
 @endsection
