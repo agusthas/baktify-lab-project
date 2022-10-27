@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $searchQuery = $request->query('search', '');
         return view('products.index', [
-            'products' => Product::query()->with(['category', 'cartDetails'])->search($searchQuery)->paginate(12)->withQueryString()
+            'products' => Product::query()->with(['category', 'cartDetails'])->search($searchQuery)->latest()->paginate(12)->withQueryString()
         ]);
     }
 
