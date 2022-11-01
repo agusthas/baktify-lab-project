@@ -46,7 +46,7 @@ class ProductController extends Controller
 
         // Save picture to storage and get the path pointing there to be saved in DB
         $validatedData['picture'] = Storage::disk('public')
-            ->putFile('product-pictures', $request->file('picture'));
+            ->putFile('images', $request->file('picture'));
 
         Product::create($validatedData);
 
@@ -91,7 +91,7 @@ class ProductController extends Controller
         if($request->hasFile('picture')) {
             Storage::disk('public')->delete($product->picture);
             $validatedData['picture'] = Storage::disk('public')
-                ->putFile('product-pictures', $request->file('picture'));
+                ->putFile('images', $request->file('picture'));
         }
 
         $product->update($validatedData);
