@@ -25,11 +25,10 @@ class AboutController extends Controller
             ]);
         }
 
-        return view('about', [
-            "company_bs" => $company_bs,
-            "company_ceo" => $company_ceo,
-            "inquirers" => $inquirers,
-            "locations" => $locations
-        ]);
+        return view('about')
+            ->with('company_bs', $company_bs)
+            ->with('company_ceo', $company_ceo)
+            ->with('inquirers', $inquirers)
+            ->with('locations', $locations);
     }
 }

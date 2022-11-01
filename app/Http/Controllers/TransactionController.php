@@ -21,9 +21,7 @@ class TransactionController extends Controller
             ->latest()
             ->get();
 
-        return view('transactions.index', [
-            'transactions' => $transactions
-        ]);
+        return view('transactions.index')->with('transactions', $transactions);
     }
 
     /**
@@ -33,10 +31,9 @@ class TransactionController extends Controller
     {
         $passcode = Str::random(6);
         $cart = Cart::query()->with('cartDetails')->where('user_id', Auth::user()->id)->firstOrFail();
-        return view('transactions.create', [
-            'cart' => $cart,
-            'passcode' => $passcode
-        ]);
+        return view('transactions.create')
+            ->with('cart', $cart)
+            ->with('passcode', $passcode);
     }
 
     /**
