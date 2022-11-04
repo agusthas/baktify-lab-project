@@ -7,11 +7,14 @@
         <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="row mb-3">
+                <div class="row justify-content-center">
+                    <img id="img-preview" class="img-thumbnail mb-3 d-block col-sm-3"/>
+                </div>
                 <label for="picture" class="col-sm-2 col-form-label text-muted">Picture</label>
                 <div class="col-sm-10">
                     <input
                         class="form-control @error('picture') is-invalid @enderror"
-                        type="file" id="picture" name="picture">
+                        type="file" id="picture" name="picture" onchange="previewImage()">
                     @error('picture')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -85,4 +88,18 @@
             <a href="{{ route('products.index') }}" class="btn btn-danger">Cancel</a>
         </form>
     </div>
+
+    @push('scripts')
+        <script>
+            const previewImage = () => {
+                const inputImg = document.querySelector('input#picture');
+                const imgPreview = document.querySelector('#img-preview');
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(inputImg.files[0]);
+                fileReader.onload = function (event) {
+                    imgPreview.src = event.target.result;
+                }
+            }
+        </script>
+    @endpush
 @endsection

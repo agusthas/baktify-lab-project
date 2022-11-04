@@ -15,9 +15,14 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $searchQuery = $request->query('search', '');
-        return view('products.index', [
-            'products' => Product::query()->with(['category', 'cartDetails'])->search($searchQuery)->paginate(12)->withQueryString()
-        ]);
+        $products = Product::query()
+            ->with(['category', 'cartDetails'])
+            ->search($searchQuery)
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('products.index')->with('products', $products);
     }
 
     /**
@@ -25,9 +30,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create', [
-            'categories' => Category::all()
-        ]);
+        $categories = Category::all();
+        return view('products.create')->with('categories', $categories);
     }
 
     /**
@@ -46,7 +50,7 @@ class ProductController extends Controller
 
         // Save picture to storage and get the path pointing there to be saved in DB
         $validatedData['picture'] = Storage::disk('public')
-            ->putFile('product-pictures', $request->file('picture'));
+            ->putFile('images', $request->file('picture'));
 
         Product::create($validatedData);
 
@@ -60,9 +64,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show', [
-            'product' => $product->load(['category', 'cartDetails'])
-        ]);
+        $product = $product->load(['category']);
+        return view('products.show')->with('product', $product);
     }
 
     /**
@@ -70,9 +73,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', [
-            'product' => $product->load('category'),
-        ]);
+        $product = $product->load('category');
+        return view('products.edit')->with('product', $product);
     }
 
     /**
@@ -91,7 +93,7 @@ class ProductController extends Controller
         if($request->hasFile('picture')) {
             Storage::disk('public')->delete($product->picture);
             $validatedData['picture'] = Storage::disk('public')
-                ->putFile('product-pictures', $request->file('picture'));
+                ->putFile('images', $request->file('picture'));
         }
 
         $product->update($validatedData);

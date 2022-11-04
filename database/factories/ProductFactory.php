@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 class ProductFactory extends Factory
 {
+    protected static $products = 1;
     /**
      * Define the model's default state.
      *
@@ -19,12 +20,14 @@ class ProductFactory extends Factory
                 return Str::ucfirst($word);
             })
             ->join(' ');
+        $picture = "images/dummy-". ProductFactory::$products . ".png";
+        ProductFactory::$products++;
         return [
             'name' => $name,
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->numberBetween(10000, 100000),
             'stock' => $this->faker->numberBetween(0, 10),
-            'picture' => 'random-image.png'
+            'picture' => $picture
         ];
     }
 }

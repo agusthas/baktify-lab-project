@@ -12,9 +12,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create', [
-          "categories" => Category::with('products')->get()
-        ]);
+        $categories = Category::with('products')->get();
+        return view('category.create')->with('categories', $categories);
     }
 
     /**

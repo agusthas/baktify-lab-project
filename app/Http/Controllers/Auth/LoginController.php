@@ -53,7 +53,7 @@ class LoginController extends Controller
                 Cookie::queue(Cookie::forget($cookieName));
             }
             $request->session()->regenerate();
-            return redirect()->intended('/home');
+            return redirect()->intended($this->redirectTo);
         }
 
         return back()->withErrors([

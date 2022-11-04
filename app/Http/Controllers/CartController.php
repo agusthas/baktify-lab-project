@@ -18,9 +18,8 @@ class CartController extends Controller
             ->where('user_id', $user->id)
             ->first();
 
-        return view('cart.index', [
-            'cart' => $cart
-        ]);
+        return view('cart.index')
+            ->with('cart', $cart);
     }
 
     /**
